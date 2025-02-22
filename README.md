@@ -1,22 +1,22 @@
-##TODO App
+## TODO App
 
 This is a full-stack Todo application built with React (frontend) and Node.js (backend), using TypeScript for both. The database is PostgreSQL, and migrations are managed via SQL queries.
 
-##Getting Started
+Getting Started
 
 Prerequisites
 
-Ensure you have the following installed:
+## Ensure you have the following installed:
 
-Node.js (LTS version recommended)
+## Node.js (LTS version recommended)
 
-PostgreSQL (Ensure the user has full privileges)
+## PostgreSQL (Ensure the user has full privileges)
 
-npm or yarn
+## npm or yarn
 
-Backend Setup
+## Backend Setup
 
-1. Clone the Repository
+## 1. Clone the Repository
 
 # Clone the forked repository
 git clone  https://github.com/LufeMC/lumaa-spring-2025-swe.git
@@ -25,7 +25,7 @@ cd todo_v3
 
 2. ##Set Up Environment Variables
 
-##Create a .env file in the server directory and add the following:
+## Create a .env file in the server directory and add the following:
 
 DATABASE_URL=postgresql://admin:Derby+254s1@localhost:5432/todo_app
 DATABASE_USER=admin
@@ -36,12 +36,12 @@ DATABASE_NAME=todo_app
 
 JWT_SECRET=ab409ee8261166ee41b8d1ca0adb3b01e1984db1242df80135b0ed8d56fa033a432f6ed8c4e8bd624d68c700ff6a37639b0691c01b481224253187dd5c41f2e8
 
-3. Install Dependencies
+## 3. Install Dependencies
 
 cd server
 npm install
 
-4. ##Set Up the Database
+## 4. Set Up the Database
 
 Run the following SQL queries in PostgreSQL before starting the server:
 
@@ -52,7 +52,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE tasks (
+## CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
@@ -62,13 +62,13 @@ CREATE TABLE tasks (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-5. Run the Backend
+## 5. Run the Backend
 
 npm run dev
 
 This will start the backend server in development mode.
 
-Frontend Setup
+## Frontend Setup
 
 1. Install Dependencies
 
@@ -80,7 +80,7 @@ npm install
 npm start
 Testing
 
-Running Tests
+## Running Tests
 
 To run tests, execute:
 
@@ -134,7 +134,7 @@ npm test
 
 Salary Expectations
 
-Expected Salary: $4,600 per month
+Expected Salary: $2300  per month
 
 Notes
 
