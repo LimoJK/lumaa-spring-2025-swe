@@ -1,119 +1,168 @@
-# Full-Stack Coding Challenge
+##TODO App
 
-**Deadline**: Sunday, Feb 23th 11:59 pm PST
+This is a full-stack Todo application built with React (frontend) and Node.js (backend), using TypeScript for both. The database is PostgreSQL, and migrations are managed via SQL queries.
 
----
+##Getting Started
 
-## Overview
+Prerequisites
 
-Create a “Task Management” application with **React + TypeScript** (frontend), **Node.js** (or **Nest.js**) (backend), and **PostgreSQL** (database). The application should:
+Ensure you have the following installed:
 
-1. **Register** (sign up) and **Log in** (sign in) users.
-2. After logging in, allow users to:
-   - **View a list of tasks**.
-   - **Create a new task**.
-   - **Update an existing task** (e.g., mark complete, edit).
-   - **Delete a task**.
+Node.js (LTS version recommended)
 
-Focus on **correctness**, **functionality**, and **code clarity** rather than visual design.  
-This challenge is intended to be completed within ~3 hours, so keep solutions minimal yet functional.
+PostgreSQL (Ensure the user has full privileges)
 
----
+npm or yarn
 
-## Requirements
+Backend Setup
 
-### 1. Authentication
+1. Clone the Repository
 
-- **User Model**:
-  - `id`: Primary key
-  - `username`: Unique string
-  - `password`: Hashed string
-- **Endpoints**:
-  - `POST /auth/register` – Create a new user
-  - `POST /auth/login` – Login user, return a token (e.g., JWT)
-- **Secure the Tasks Routes**: Only authenticated users can perform task operations.  
-  - **Password Hashing**: Use `bcrypt` or another hashing library to store passwords securely.
-  - **Token Verification**: Verify the token (JWT) on each request to protected routes.
+# Clone the forked repository
+git clone  https://github.com/LufeMC/lumaa-spring-2025-swe.git
+cd lumaa-spring-2025-swe
+cd todo_v3
 
-### 2. Backend (Node.js or Nest.js)
+2. ##Set Up Environment Variables
 
-- **Tasks CRUD**:  
-  - `GET /tasks` – Retrieve a list of tasks (optionally filtered by user).  
-  - `POST /tasks` – Create a new task.  
-  - `PUT /tasks/:id` – Update a task (e.g., mark as complete, edit text).  
-  - `DELETE /tasks/:id` – Delete a task.
-- **Task Model**:
-  - `id`: Primary key
-  - `title`: string
-  - `description`: string (optional)
-  - `isComplete`: boolean (default `false`)
-  - _(Optional)_ `userId` to link tasks to the user who created them
-- **Database**: PostgreSQL
-  - Provide instructions/migrations to set up:
-    - `users` table (with hashed passwords)
-    - `tasks` table
-- **Setup**:
-  - `npm install` to install dependencies
-  - `npm run start` (or `npm run dev`) to run the server
-  - Document any environment variables (e.g., database connection string, JWT secret)
+##Create a .env file in the server directory and add the following:
 
-### 3. Frontend (React + TypeScript)
+DATABASE_URL=postgresql://admin:Derby+254s1@localhost:5432/todo_app
+DATABASE_USER=admin
+DATABASE_PASSWORD=Derby+254s1
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_NAME=todo_app
 
-- **Login / Register**:
-  - Simple forms for **Register** and **Login**.
-  - Store JWT (e.g., in `localStorage`) upon successful login.
-  - If not authenticated, the user should not see the tasks page.
-- **Tasks Page**:
-  - Fetch tasks from `GET /tasks` (including auth token in headers).
-  - Display the list of tasks.
-  - Form to create a new task (`POST /tasks`).
-  - Buttons/fields to update a task (`PUT /tasks/:id`).
-  - Button to delete a task (`DELETE /tasks/:id`).
-- **Navigation**:
-  - Show `Login`/`Register` if not authenticated.
-  - Show `Logout` if authenticated.
-- **Setup**:
-  - `npm install` then `npm start` (or `npm run dev`) to run.
-  - Document how to point the frontend at the backend (e.g., `.env` file, base URL).
+JWT_SECRET=ab409ee8261166ee41b8d1ca0adb3b01e1984db1242df80135b0ed8d56fa033a432f6ed8c4e8bd624d68c700ff6a37639b0691c01b481224253187dd5c41f2e8
 
----
+3. Install Dependencies
 
-## Deliverables
+cd server
+npm install
 
-1. **Fork the Public Repository**: **Fork** this repo into your own GitHub account.
-2. **Implement Your Solution** in the forked repository. Make sure you're README file has:
-   - Steps to set up the database (migrations, environment variables).
-   - How to run the backend.
-   - How to run the frontend.
-   - Any relevant notes on testing.
-   - Salary Expectations per month (Mandatory)
-3. **Short Video Demo**: Provide a link (in a `.md` file in your forked repo) to a brief screen recording showing:
-   - Registering a user
-   - Logging in
-   - Creating, updating, and deleting tasks
-4. **Deadline**: Submissions are due **Sunday, Feb 23th 11:59 pm PST**.
+4. ##Set Up the Database
 
-> **Note**: Please keep your solution minimal. The entire project is intended to be completed in around 3 hours. Focus on core features (registration, login, tasks CRUD) rather than polished UI or extra features.
+Run the following SQL queries in PostgreSQL before starting the server:
 
----
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-## Evaluation Criteria
+CREATE TABLE tasks (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    status VARCHAR(50) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 
-1. **Functionality**  
-   - Does registration and login work correctly (with password hashing)?
-   - Are tasks protected by authentication?
-   - Does the tasks CRUD flow work end-to-end?
+5. Run the Backend
 
-2. **Code Quality**  
-   - Is the code structured logically and typed in TypeScript?
-   - Are variable/function names descriptive?
+npm run dev
 
-3. **Clarity**  
-   - Is the `README.md` (in your fork) clear and detailed about setup steps?
-   - Easy to run and test?
+This will start the backend server in development mode.
 
-4. **Maintainability**  
-   - Organized logic (controllers/services, etc.)
-   - Minimal hard-coded values
+Frontend Setup
 
-Good luck, and we look forward to your submission!
+1. Install Dependencies
+
+cd client
+npm install
+
+2. Start the Frontend
+
+npm start
+Testing
+
+Running Tests
+
+To run tests, execute:
+
+npm test
+
+Postman API Tests
+
+You can use Postman to test the following endpoints:
+
+Login
+
+POST http://localhost:5000/api/auth/login
+
+{
+  "email": "testuser2@example.com",
+  "password": "Password123"
+}
+
+Register
+
+POST http://localhost:5000/api/auth/register
+
+{
+  "email": "testuser2@example.com",
+  "password": "Password123"
+}
+
+With all tasks, the routes are JWT protected, bearer token has to be passed in the headers
+
+Create a Task
+
+POST http://localhost:5000/api/tasks
+Headers:
+{
+  "Authorization": "Bearer YOUR_JWT_TOKEN"
+}
+Body:
+{
+  "description": "Build a Todo App Test2 for user1"
+}
+
+This will launch the React application.
+
+Testing
+
+Running Tests
+
+To run tests, execute:
+
+npm test
+
+Salary Expectations
+
+Expected Salary: $4,600 per month
+
+Notes
+
+Ensure PostgreSQL is running before starting the backend.
+
+The user for PostgreSQL must have full privileges.
+
+Modify the .env file as needed based on your local database credentials.
+
+If you face permission issues, run:
+
+sudo -u postgres psql
+ALTER USER admin WITH SUPERUSER;
+
+Deployment
+
+To deploy the application, consider using:
+
+Frontend: Vercel/Netlify
+
+Backend: Render/Heroku
+
+Database: Supabase/Cloud PostgreSQL providers
+
+Video Demo
+
+Watch the Demo
+https://www.webmobilefirst.com/en/screencasts/-r243d6m7bpdge/
+
+
+
